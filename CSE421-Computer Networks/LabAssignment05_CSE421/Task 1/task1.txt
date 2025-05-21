@@ -1,0 +1,73 @@
+
+
+R1>en 
+R1#conf t
+R1(config)#ip route 172.31.0.0 255.255.255.0 172.31.1.193
+R1(config)#ip route 172.31.1.196 255.255.255.252 172.31.1.193
+R1(config)#ip route 172.31.1.128 255.255.255.192 172.31.1.193
+
+
+R2>en
+R2#conf t	
+R2(config)#ip route 172.31.1.0 255.255.255.128 172.31.1.194
+R2(config)#ip route 172.31.1.128 255.255.255.192 172.31.1.198
+
+
+R3>en
+R3#conf t
+R3(config)#ip route 0.0.0.0 0.0.0.0 172.31.1.197
+R3#show ip route
+
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 172.31.1.197 to network 0.0.0.0
+
+     172.31.0.0/16 is variably subnetted, 7 subnets, 5 masks
+S       172.31.0.0/24 [1/0] via 172.31.1.197
+S       172.31.1.0/25 [1/0] via 172.31.1.197
+C       172.31.1.128/26 is directly connected, GigabitEthernet0/0
+L       172.31.1.129/32 is directly connected, GigabitEthernet0/0
+S       172.31.1.192/30 [1/0] via 172.31.1.197
+C       172.31.1.196/30 is directly connected, Serial0/0/1
+L       172.31.1.198/32 is directly connected, Serial0/0/1
+S*   0.0.0.0/0 [1/0] via 172.31.1.197
+
+
+pc-1
+C:\>ping 172.31.0.254
+Ping statistics for 172.31.0.254:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+
+C:\>ping 172.31.1.128
+Ping statistics for 172.31.1.128:
+    Packets: Sent = 4, Received = 2, Lost = 2 (50% loss)
+
+pc-3
+C:\>ping 172.31.0.0
+Ping statistics for 172.31.0.0:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+
+
+C:\>ping 172.31.1.0
+Ping statistics for 172.31.1.0:
+    Packets: Sent = 4, Received = 4, Lost = 0
+
+pc-2
+C:\>ping 172.31.1.0 
+Ping statistics for 172.31.1.0:
+    Packets: Sent = 4, Received = 4, Lost = 0
+
+C:\>ping 172.31.1.128
+Ping statistics for 172.31.1.128:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss)
+
+
+
+
+

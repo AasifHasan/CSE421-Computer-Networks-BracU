@@ -1,0 +1,21 @@
+R1>en
+Rl#conf t
+Enter configuration commands, one per line. End with CNTL/Z.
+Rl (config) #ip dhep excluded-address 192.168.50.1 192.168.50.10
+Rl (config) #ip dhcp pool R1_LAN
+Rl (dhcp-config) #network 192.168.50.0 255.255.255.0
+Rl (dhcp-config) #default-router 192.168.50.1
+Rl (dhcp-config) #dns-server 192.168.60.254
+R1 (dhcp-config) #exit
+Rl (config) #exit
+Rl#copy running-config startup-config
+Destination filename [startup-config]?
+Building configuration ...
+[OK]
+R1#
+Rl (config) #int g0/0
+Rl (config-if) #ip helper-address 192.168.60.253
+Rl (config-if) #exit
+Rl (config) #exit
+R1#
+&SYS-5-CONFIG_I: Configured from console by console
